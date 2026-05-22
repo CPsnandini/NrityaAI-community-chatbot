@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-import logo from "./logo.svg";
+import logo from "./logo.jpeg";
+
+const API_BASE = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 function App() {
   const [channels, setChannels] = useState([]);
@@ -33,7 +35,7 @@ function App() {
 
   const fetchChannels = () => {
     axios
-      .get("http://127.0.0.1:8000/channels")
+      .get(`${API_BASE}/channels`)
       .then((res) => {
         setChannels(res.data);
       })
@@ -48,7 +50,7 @@ function App() {
 
     axios
       .post(
-        `http://127.0.0.1:8000/channels?name=${channelName}&description=${channelDesc}`,
+        `${API_BASE}/channels?name=${channelName}&description=${channelDesc}`,
       )
       .then(() => {
         setChannelName("");
@@ -64,7 +66,7 @@ function App() {
   // JOIN CHANNEL
   const joinChannel = (channelId) => {
     axios
-      .post(`http://127.0.0.1:8000/join?user_id=1&channel_id=${channelId}`)
+      .post(`${API_BASE}/join?user_id=1&channel_id=${channelId}`)
       .then(() => {
         alert("Joined channel!");
       })
@@ -76,18 +78,18 @@ function App() {
   // FETCH POSTS
   const fetchPosts = async (channelId) => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/posts/${channelId}`);
+      const res = await axios.get(`${API_BASE}/posts/${channelId}`);
 
       setPosts(res.data);
 
       // FETCH COMMENTS + LIKES
       res.data.forEach(async (post) => {
         const commentsRes = await axios.get(
-          `http://127.0.0.1:8000/comments/${post.id}`,
+          `${API_BASE}/comments/${post.id}`,
         );
 
         const likesRes = await axios.get(
-          `http://127.0.0.1:8000/likes/${post.id}`,
+          `${API_BASE}/likes/${post.id}`,
         );
 
         setComments((prev) => ({
@@ -111,7 +113,7 @@ function App() {
 
     axios
       .post(
-        `http://127.0.0.1:8000/post?content=${newPost}&user_id=1&channel_id=${selectedChannel.id}`,
+        `${API_BASE}/post?content=${newPost}&user_id=1&channel_id=${selectedChannel.id}`,
       )
       .then(() => {
         setNewPost("");
@@ -124,9 +126,9 @@ function App() {
 
   // LIKE POST
   const likePost = async (postId) => {
-    await axios.post(`http://127.0.0.1:8000/like?user_id=1&post_id=${postId}`);
+    await axios.post(`${API_BASE}/like?user_id=1&post_id=${postId}`);
 
-    const res = await axios.get(`http://127.0.0.1:8000/likes/${postId}`);
+    const res = await axios.get(`${API_BASE}/likes/${postId}`);
 
     setLikes((prev) => ({
       ...prev,
@@ -143,10 +145,10 @@ function App() {
     const formattedContent = `[${username}]: ${content}`;
 
     await axios.post(
-      `http://127.0.0.1:8000/comment?content=${encodeURIComponent(formattedContent)}&user_id=1&post_id=${postId}`,
+      `${API_BASE}/comment?content=${encodeURIComponent(formattedContent)}&user_id=1&post_id=${postId}`,
     );
 
-    const res = await axios.get(`http://127.0.0.1:8000/comments/${postId}`);
+    const res = await axios.get(`${API_BASE}/comments/${postId}`);
 
     setComments((prev) => ({
       ...prev,
@@ -173,7 +175,7 @@ function App() {
     setLoading(true);
 
     axios
-      .post(`http://127.0.0.1:8000/chat?question=${question}`)
+      .post(`${API_BASE}/chat?question=${question}`)
       .then((res) => {
         const botMessage = {
           sender: "bot",
