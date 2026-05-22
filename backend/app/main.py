@@ -6,6 +6,7 @@ from app.routes import chatbot
 from app.database import engine
 from app.models import community as community_models
 from app.routes import community as community_routes
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Nritya AI",
