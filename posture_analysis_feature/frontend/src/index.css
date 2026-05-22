@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cinzel", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
   --color-ink: #0c0507;
   --color-maroon-50: #fdf2f4;
   --color-maroon-100: #fce7eb;
-  --color-cream: #f5e6d3;
-  --color-cream-muted: #c9b8a8;
+  --color-cream: #f0e8dc;
+  --color-cream-muted: #b8a898;
   --color-maroon-800: #6b1f32;
   --color-maroon-900: #4a1422;
-  --color-maroon-950: #2a0a12;
+  --color-maroon-950: #1a0505;
   --color-gold-200: #fde9a9;
   --color-gold-300: #f6d873;
   --color-gold-400: #e8c547;
@@ -25,16 +25,26 @@
   }
   body {
     @apply m-0 min-h-svh font-sans text-cream;
-    background-color: var(--color-maroon-950);
+    background-color: #1a0505;
     background-image:
-      radial-gradient(ellipse 120% 80% at 50% -20%, rgba(212, 175, 55, 0.12), transparent),
-      radial-gradient(ellipse 60% 50% at 100% 0%, rgba(107, 31, 50, 0.45), transparent),
-      linear-gradient(180deg, #2a0a12 0%, #1a0609 100%);
+      radial-gradient(ellipse 90% 70% at 50% 35%, rgba(107, 31, 50, 0.55), transparent 65%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(74, 20, 34, 0.4), transparent),
+      linear-gradient(180deg, #2b0a0a 0%, #1a0505 45%, #120303 100%);
     background-attachment: fixed;
   }
   #root {
     @apply min-h-svh w-full;
   }
+}
+
+@utility bg-fabric-texture {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(212, 175, 55, 0.03) 2px,
+    rgba(212, 175, 55, 0.03) 3px
+  );
 }
 
 @utility glass-panel {
@@ -43,4 +53,32 @@
 
 @utility text-gradient-gold {
   @apply bg-gradient-to-r from-gold-200 via-gold-400 to-gold-600 bg-clip-text text-transparent;
+}
+
+@utility hero-title {
+  @apply font-display text-3xl font-semibold uppercase leading-[1.15] tracking-[0.12em] text-gold-400 sm:text-4xl md:text-[2.65rem] md:tracking-[0.14em];
+}
+
+@utility hero-tagline {
+  @apply font-display text-lg italic text-gold-300/90 md:text-xl;
+}
+
+@utility option-card {
+  @apply relative flex flex-col items-center rounded-[18px] border border-gold-500/25 bg-[#2a0808]/80 px-8 py-10 text-center shadow-[inset_0_1px_0_rgba(212,175,55,0.12),0_12px_40px_rgba(0,0,0,0.45)] transition-all duration-300;
+}
+
+@utility option-card-hover {
+  @apply hover:-translate-y-1 hover:border-gold-400/45 hover:shadow-[inset_0_1px_0_rgba(246,216,115,0.2),0_16px_48px_rgba(212,175,55,0.12)];
+}
+
+@utility icon-box {
+  @apply mb-6 grid h-14 w-14 place-items-center rounded-xl border border-gold-500/40 bg-[#1a0505]/60 shadow-[0_0_20px_rgba(212,175,55,0.15)];
+}
+
+@utility hero-divider {
+  @apply relative mx-auto my-6 h-px w-full max-w-md bg-gradient-to-r from-transparent via-gold-500/60 to-transparent;
+}
+
+@utility about-btn {
+  @apply inline-flex items-center gap-2 rounded-full border border-gold-500/50 bg-transparent px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-gold-400 transition-colors hover:border-gold-400 hover:bg-gold-500/10 hover:text-gold-200;
 }

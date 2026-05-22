@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CameraFeed } from '../components/CameraFeed'
 import { ConfidenceBar } from '../components/ConfidenceBar'
@@ -22,6 +23,9 @@ const statusCopy = {
 }
 
 export function Training() {
+  const [searchParams] = useSearchParams()
+  const entryMode = searchParams.get('mode')
+
   const videoRef = useRef(null)
   const canvasRef = useRef(null)
   const fileRef = useRef(null)
@@ -62,6 +66,16 @@ export function Training() {
     getFrameBlob,
     onSnapshot
   )
+
+  useEffect(() => {
+    if (entryMode === 'upload' && fileRef.current) {
+      const t = window.setTimeout(() => fileRef.current?.click(), 400)
+      return () => window.clearTimeout(t)
+    }
+    if (entryMode === 'live' && camReady) {
+      setLive(true)
+    }
+  }, [entryMode, camReady])
 
   useEffect(() => {
     let stream

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-import logo from "./logo.jpeg";
+import logo from "./logo.svg";
 
 function App() {
   const [channels, setChannels] = useState([]);
